@@ -1,5 +1,5 @@
 import { header } from "./header.js";
-header();
+header(true);
 const h1DOM = document.querySelector('h1');
 const buttonDOM = document.querySelector('button');
 
