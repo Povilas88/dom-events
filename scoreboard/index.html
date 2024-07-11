@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/scoreboard.css">
+    <link rel="stylesheet" href="../css/digital-7.ttf">
+</head>
+
+<body>
+    <main>
+        <h1>Scoreboard</h1>
+        <div class="teamContainer">
+            <div id="team1">
+                <h2>Team 1</h2>
+                <div class="points">
+                    <p>Points: </p>
+                    <div>0</div>
+                </div>
+                <div class="buttons">
+                    <div class="one">
+                        <button>+1</button>
+                        <button>+2</button>
+                        <button>+3</button>
+                    </div>
+                    <div class="one">
+                        <button>-1</button>
+                        <button>-2</button>
+                        <button>-3</button>
+                    </div>
+                </div>
+            </div>
+            <div class="timer">
+                <span class="digit" id="minutesTens">1</span>
+                <span class="digit" id="minutesOnes">0</span>:
+                <span class="digit" id="secondsTens">0</span>
+                <span class="digit" id="secondsOnes">0</span>
+            </div>
+            <div id="team2">
+                <h2>Team 2</h2>
+                <div class="points">
+                    <p>Points: </p>
+                    <div>0</div>
+                </div>
+                <div class="buttons">
+                    <div class="one">
+                        <button>+1</button>
+                        <button>+2</button>
+                        <button>+3</button>
+                    </div>
+                    <div class="one">
+                        <button>-1</button>
+                        <button>-2</button>
+                        <button>-3</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 class="eventLogH">Event Log</h3>
+        <div id="eventLog" class="event"></div>
+    </main>
+    <script type="module" src="../js/scoreboard.js"></script>
+</body>
+
+</html>

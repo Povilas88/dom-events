@@ -1,0 +1,47 @@
+body,
+body * {
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+header nav{
+    display: flex;
+    gap: 1rem;
+    font-size: 1rem;
+}
+
+header nav a {
+    font-size: 1.5rem;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+        sans-serif;
+    padding: 2rem;
+}
+.plusMinus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.one {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 2rem;
+}
+
+.one>button {
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+.one>button:hover {
+   cursor: pointer;
+}
