@@ -85,7 +85,25 @@ function team(coof = 0, team) {
     team === 1 ? result1DOM.textContent = team1Score : result2DOM.textContent = team2Score;
     result = coof > 0 ? `<p>Team ${team} scored: +${coof} ${minutes}:${seconds} </p>`
         : `<p>Points taken from Team ${team}: ${coof} ${minutes}:${seconds} </p>`;
-    logDOM.insertAdjacentHTML('afterbegin', result);
+
+    const eventElement = document.createElement('div');
+    eventElement.innerHTML = result;
+
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.addEventListener('click', () => {
+        if (team === 1) {
+            team1Score -= coof;
+            result1DOM.textContent = team1Score;
+        } else {
+            team2Score -= coof;
+            result2DOM.textContent = team2Score;
+        }
+        eventElement.remove();
+    });
+
+    eventElement.appendChild(removeButton);
+    logDOM.insertAdjacentElement('afterbegin', eventElement);
 }
 
 const bars1DOM = document.querySelectorAll('.bar1');
