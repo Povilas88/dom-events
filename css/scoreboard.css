@@ -132,14 +132,22 @@ h2 {
 
 @media only screen and (max-width: 600px) {
     .teamContainer{
-        scale: 90%;
-        margin-right: 50px;
+        scale: 80%;
+        margin-right: 23%;
     }
     h1{
-        margin-right: 50px;
+        margin-right: 75px;
+        margin-bottom: -30px;
     }
     .eventLogH {
-        margin-right: 50px;
+        margin-top: -40px;
+        margin-right: 75px;
+    }
+
+    .event {
+        scale: 75%;
+        margin-top: -50px;
+        margin-right: 50%;
     }
 
 }
