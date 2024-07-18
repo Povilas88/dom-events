@@ -95,9 +95,11 @@ function team(coof = 0, team) {
         if (team === 1) {
             team1Score -= coof;
             result1DOM.textContent = team1Score;
+            localStorage.setItem('team1Score', team1Score);
         } else {
             team2Score -= coof;
             result2DOM.textContent = team2Score;
+            localStorage.setItem('team2Score', team2Score);
         }
         eventElement.remove();
     });
