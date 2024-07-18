@@ -110,8 +110,8 @@ function team(coof = 0, team) {
 }
 
 window.addEventListener('load', () => {
-    team1Score = parseInt(localStorage.getItem('team1Score'));
-    team2Score = parseInt(localStorage.getItem('team2Score'));
+    team1Score = parseInt(localStorage.getItem('team1Score')) || 0;
+    team2Score = parseInt(localStorage.getItem('team2Score')) || 0;
 
     result1DOM.textContent = team1Score;
     result2DOM.textContent = team2Score;
