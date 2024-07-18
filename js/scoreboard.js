@@ -104,7 +104,18 @@ function team(coof = 0, team) {
 
     eventElement.appendChild(removeButton);
     logDOM.insertAdjacentElement('afterbegin', eventElement);
+
+    localStorage.setItem('team1Score', team1Score);
+    localStorage.setItem('team2Score', team2Score);
 }
+
+window.addEventListener('load', () => {
+    team1Score = parseInt(localStorage.getItem('team1Score'));
+    team2Score = parseInt(localStorage.getItem('team2Score'));
+
+    result1DOM.textContent = team1Score;
+    result2DOM.textContent = team2Score;
+});
 
 const bars1DOM = document.querySelectorAll('.bar1');
 const bars2DOM = document.querySelectorAll('.bar2');
