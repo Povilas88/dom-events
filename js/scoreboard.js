@@ -2,6 +2,9 @@ import { header } from "./header.js";
 import { updateTimer } from "./timer.js";
 import { minutes } from "./timer.js";
 import { seconds } from "./timer.js";
+import { pauseTimer } from "./timer.js";
+import { startTimer } from "./timer.js";
+
 header();
 updateTimer();
 
@@ -10,40 +13,58 @@ buttonsDOM.forEach((button, index) => {
     button.addEventListener('click', () => {
         switch (index) {
             case 0:
-                team1(1);
+                foul(1);
                 break;
             case 1:
-                team1(2);
+                foulMinus(1);
                 break;
             case 2:
-                team1(3);
+                team(1, 1);
                 break;
             case 3:
-                team1(-1);
+                team(2, 1);
                 break;
             case 4:
-                team1(-2);
+                team(3, 1);
                 break;
             case 5:
-                team1(-3);
+                team(-1, 1);
                 break;
             case 6:
-                team2(1);
+                team(-2, 1);
                 break;
             case 7:
-                team2(2);
+                team(-3, 1);
                 break;
             case 8:
-                team2(3);
+                startTimer();
                 break;
             case 9:
-                team2(-1);
+                pauseTimer();
                 break;
             case 10:
-                team2(-2);
+                foul(2);;
                 break;
             case 11:
-                team2(-3);
+                foulMinus(2);;
+                break;
+            case 12:
+                team(1, 2);
+                break;
+            case 13:
+                team(2, 2);
+                break;
+            case 14:
+                team(3, 2);
+                break;
+            case 15:
+                team(-1, 2);
+                break;
+            case 16:
+                team(-2, 2);
+                break;
+            case 17:
+                team(-3, 2);
                 break;
             default:
                 break;
@@ -54,23 +75,52 @@ buttonsDOM.forEach((button, index) => {
 const result1DOM = document.getElementById('team1').querySelector('.points > div');
 const result2DOM = document.getElementById('team2').querySelector('.points > div');
 const logDOM = document.getElementById('eventLog');
-let result = '';
 
+let result = '';
 let team1Score = 0;
 let team2Score = 0;
 
-function team1(coof = 0) {
-    team1Score += coof;
-    result1DOM.textContent = team1Score;
-    result = coof > 0 ? `<p>Team 1 scored: +${coof} ${minutes}:${seconds} </p>`
-        : `<p>Points taken from Team 1: ${coof} ${minutes}:${seconds} </p>`;
+function team(coof = 0, team) {
+    team === 1 ? team1Score += coof : team2Score += coof;
+    team === 1 ? result1DOM.textContent = team1Score : result2DOM.textContent = team2Score;
+    result = coof > 0 ? `<p>Team ${team} scored: +${coof} ${minutes}:${seconds} </p>`
+        : `<p>Points taken from Team ${team}: ${coof} ${minutes}:${seconds} </p>`;
     logDOM.insertAdjacentHTML('afterbegin', result);
 }
 
-function team2(coof = 0) {
-    team2Score += coof;
-    result2DOM.textContent = team2Score;
-    result = coof > 0 ? `<p>Team 2 scored: +${coof} ${minutes}:${seconds} </p>`
-        : `<p>Points taken from Team 2: ${coof} ${minutes}:${seconds} </p>`;
-    logDOM.insertAdjacentHTML('afterbegin', result);
+const bars1DOM = document.querySelectorAll('.bar1');
+const bars2DOM = document.querySelectorAll('.bar2');
+
+let foul1Count = 0;
+let foul2Count = 0;
+
+function foul(team) {
+    const barsDOM = team === 1 ? bars1DOM : bars2DOM;
+    const foulCount = team === 1 ? foul1Count : foul2Count;
+
+    if (foulCount < barsDOM.length - 1) {
+        barsDOM[foulCount].style.backgroundColor = 'orange';
+        team === 1 ? foul1Count++ : foul2Count++;
+    } else {
+        for (let i = 0; i < barsDOM.length; i++) {
+            barsDOM[i].style.backgroundColor = 'red';
+        }
+    }
+}
+
+function foulMinus(team) {
+    const barsDOM = team === 1 ? bars1DOM : bars2DOM;
+    const foulCount = team === 1 ? foul1Count : foul2Count;
+
+    if (foulCount > 0) {
+        for (let i = 0; i < barsDOM.length; i++) {
+            barsDOM[i].style.backgroundColor = 'orange';
+        }
+        team === 1 ? foul1Count-- : foul2Count--;
+    }
+    if (foulCount < barsDOM.length) {
+        for (let i = foulCount; i < barsDOM.length; i++) {
+            barsDOM[i].style.backgroundColor = 'transparent';
+        }
+    }
 }

@@ -43,6 +43,43 @@ h2 {
     text-align: end;
 }
 
+.teamFouls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 12px;
+}
+
+.teamFouls button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1rem;
+    width: 1rem;
+}
+
+.foulBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    margin-bottom: 10px;
+}
+
+.bar1{
+    width: 20px;
+    height: 10px;
+    background-color: transparent;
+}
+
+.bar2 {
+    width: 20px;
+    height: 10px;
+    background-color: transparent;
+}
+
 .eventLogH{
     margin-top: 1rem;
     display: flex;
@@ -70,6 +107,16 @@ h2 {
     background-color: black;
     height: 40px;
     width: 75px;
+    margin-bottom: 10px;
+}
+.timeContainer button {
+    display: inline;
+    font-size: 10px;
+    padding: 3px;
+}
+
+.timeContainer button:hover{
+    cursor: pointer;
 }
  .digit {
      width: 16px;

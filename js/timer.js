@@ -1,6 +1,7 @@
 export let time = 600;
 export let minutes = '';
 export let seconds = '';
+export let timerId;
 
 export function updateTimer() {
     minutes = String(Math.floor(time / 60)).padStart(2, '0');
@@ -13,8 +14,19 @@ export function updateTimer() {
 
     if (time > 0) {
         time--;
-        setTimeout(updateTimer, 1000);
+        timerId = setTimeout(updateTimer, 1000);
     }
+}
+
+export function startTimer() {
+    if (!timerId) {
+        updateTimer();
+    }
+}
+
+export function pauseTimer() {
+    clearTimeout(timerId);
+    timerId = null;
 }
 
 // const timerElement = document.getElementById('timer');
