@@ -86,6 +86,13 @@ function team(coof = 0, team) {
     result = coof > 0 ? `<p>Team ${team} scored: +${coof} ${minutes}:${seconds} </p>`
         : `<p>Points taken from Team ${team}: ${coof} ${minutes}:${seconds} </p>`;
 
+    const eventData = {
+        coof,
+        team,
+        minutes,
+        seconds
+    };
+
     const eventElement = document.createElement('div');
     eventElement.innerHTML = result;
 
@@ -102,21 +109,57 @@ function team(coof = 0, team) {
             localStorage.setItem('team2Score', team2Score);
         }
         eventElement.remove();
+        const updatedEvents = events.filter(e => e !== event);
+        localStorage.setItem('events', JSON.stringify(updatedEvents));
     });
 
     eventElement.appendChild(removeButton);
     logDOM.insertAdjacentElement('afterbegin', eventElement);
 
+    const events = JSON.parse(localStorage.getItem('events')) || [];
+    events.push(eventData);
+    localStorage.setItem('events', JSON.stringify(events));
     localStorage.setItem('team1Score', team1Score);
     localStorage.setItem('team2Score', team2Score);
 }
 
 window.addEventListener('load', () => {
-    team1Score = parseInt(localStorage.getItem('team1Score')) || 0;
-    team2Score = parseInt(localStorage.getItem('team2Score')) || 0;
+    const events = JSON.parse(localStorage.getItem('events')) || [];
 
-    result1DOM.textContent = team1Score;
-    result2DOM.textContent = team2Score;
+    events.forEach(event => {
+        const { coof, team, minutes, seconds } = event;
+        const result = coof > 0 ? `<p>Team ${team} scored: +${coof} ${minutes}:${seconds}</p>`
+            : `<p>Points taken from Team ${team}: ${coof} ${minutes}:${seconds}</p>`;
+
+        const eventElement = document.createElement('div');
+        eventElement.innerHTML = result;
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.addEventListener('click', () => {
+            if (team === 1) {
+                team1Score -= coof;
+                result1DOM.textContent = team1Score;
+                localStorage.setItem('team1Score', team1Score);
+            } else {
+                team2Score -= coof;
+                result2DOM.textContent = team2Score;
+                localStorage.setItem('team2Score', team2Score);
+            }
+            eventElement.remove();
+            const updatedEvents = events.filter(e => e !== event);
+            localStorage.setItem('events', JSON.stringify(updatedEvents));
+        });
+
+        eventElement.appendChild(removeButton);
+        logDOM.insertAdjacentElement('afterbegin', eventElement);
+
+        team1Score = parseInt(localStorage.getItem('team1Score')) || 0;
+        team2Score = parseInt(localStorage.getItem('team2Score')) || 0;
+
+        result1DOM.textContent = team1Score;
+        result2DOM.textContent = team2Score;
+    });
 });
 
 const bars1DOM = document.querySelectorAll('.bar1');
