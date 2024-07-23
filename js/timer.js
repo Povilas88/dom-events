@@ -20,13 +20,30 @@ export function updateTimer() {
 
 export function startTimer() {
     if (!timerId) {
-        updateTimer();
+        if (localStorage.getItem('savedTime')) {
+            time = parseInt(localStorage.getItem('savedTime'));
+        }
+        timerId = setTimeout(updateTimer, 1000);
     }
 }
 
 export function pauseTimer() {
     clearTimeout(timerId);
     timerId = null;
+    localStorage.setItem('savedTime', time)
+}
+
+export function resetTimer() {
+    time = 600;
+    minutes = String(Math.floor(time / 60)).padStart(2, '0');
+    seconds = String(time % 60).padStart(2, '0');
+
+    document.getElementById('minutesTens').textContent = minutes[0];
+    document.getElementById('minutesOnes').textContent = minutes[1];
+    document.getElementById('secondsTens').textContent = seconds[0];
+    document.getElementById('secondsOnes').textContent = seconds[1];
+
+    localStorage.setItem('savedTime', time);
 }
 
 // const timerElement = document.getElementById('timer');

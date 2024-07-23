@@ -37,7 +37,7 @@ h2 {
     margin-bottom: 0.5rem;
 }
 
-.points div{
+.points div {
     color: red;
     width: 20px;
     text-align: end;
@@ -68,7 +68,7 @@ h2 {
     margin-bottom: 10px;
 }
 
-.bar1{
+.bar1 {
     width: 20px;
     height: 10px;
     background-color: transparent;
@@ -80,14 +80,14 @@ h2 {
     background-color: transparent;
 }
 
-.eventLogH{
+.eventLogH {
     margin-top: 1rem;
     display: flex;
     font-size: 1.7rem;
     margin-bottom: 0;
 }
 
-.event{
+.event {
     width: 480px;
     text-align: end;
     font-size: 1.5rem;
@@ -97,7 +97,7 @@ h2 {
     padding-right: 20px;
 }
 
-.event div{
+.event div {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -117,25 +117,30 @@ h2 {
     margin-bottom: 10px;
 }
 .timeContainer button {
-    display: inline;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-bottom: 5px;
     font-size: 10px;
     padding: 3px;
+    width: 40px;
 }
 
-.timeContainer button:hover{
+.timeContainer button:hover {
     cursor: pointer;
 }
- .digit {
-     width: 16px;
-     text-align: end;
- }
+.digit {
+    width: 16px;
+    text-align: end;
+}
 
 @media only screen and (max-width: 600px) {
-    .teamContainer{
+    .teamContainer {
         scale: 80%;
         margin-right: 55px;
     }
-    h1{
+    h1 {
         margin-right: 50px;
         margin-bottom: -30px;
     }
@@ -149,7 +154,4 @@ h2 {
         margin-top: -50px;
         margin-right: 100px;
     }
-
 }
-
-

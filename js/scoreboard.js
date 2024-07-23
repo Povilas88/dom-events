@@ -1,12 +1,11 @@
 import { header } from "./header.js";
-import { updateTimer } from "./timer.js";
 import { minutes } from "./timer.js";
 import { seconds } from "./timer.js";
 import { pauseTimer } from "./timer.js";
 import { startTimer } from "./timer.js";
+import { resetTimer } from "./timer.js";
 
 header();
-updateTimer();
 
 const buttonsDOM = document.querySelectorAll('button');
 buttonsDOM.forEach((button, index) => {
@@ -43,27 +42,30 @@ buttonsDOM.forEach((button, index) => {
                 pauseTimer();
                 break;
             case 10:
-                foul(2, 'add');;
+                resetTimer();
                 break;
             case 11:
-                foul(2, 'minus');;
+                foul(2, 'add');;
                 break;
             case 12:
-                team(1, 2);
+                foul(2, 'minus');;
                 break;
             case 13:
-                team(2, 2);
+                team(1, 2);
                 break;
             case 14:
-                team(3, 2);
+                team(2, 2);
                 break;
             case 15:
-                team(-1, 2);
+                team(3, 2);
                 break;
             case 16:
-                team(-2, 2);
+                team(-1, 2);
                 break;
             case 17:
+                team(-2, 2);
+                break;
+            case 18:
                 team(-3, 2);
                 break;
             default:
@@ -76,90 +78,88 @@ const result1DOM = document.getElementById('team1').querySelector('.points > div
 const result2DOM = document.getElementById('team2').querySelector('.points > div');
 const logDOM = document.getElementById('eventLog');
 
-let result = '';
 let team1Score = 0;
 let team2Score = 0;
 
 function team(coof = 0, team) {
     team === 1 ? team1Score += coof : team2Score += coof;
     team === 1 ? result1DOM.textContent = team1Score : result2DOM.textContent = team2Score;
-    result = coof > 0 ? `<p>Team ${team} scored: +${coof} ${minutes}:${seconds} </p>`
-        : `<p>Points taken from Team ${team}: ${coof} ${minutes}:${seconds} </p>`;
 
-    const eventData = {
-        coof,
-        team,
-        minutes,
-        seconds
+    const array = {
+        score: coof,
+        team: team,
+        time: `${minutes}:${seconds}`
     };
 
-    const eventElement = document.createElement('div');
-    eventElement.innerHTML = result;
+    logDOM.insertAdjacentHTML('afterbegin', `<p>Team ${team} ${coof > 0 ? 'scored' : 'lost points'}: ${coof} ${minutes}:${seconds} <button class="del">Remove</button></p>`);
 
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'Remove';
-    removeButton.addEventListener('click', () => {
-        if (team === 1) {
-            team1Score -= coof;
+    let resultsArray = JSON.parse(localStorage.getItem('results')) || [];
+    resultsArray.push(array);
+
+    const removeBtns = document.querySelectorAll('.del');
+    removeBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const parent = e.target.parentElement;
+            parent.remove();
+
+            const index = resultsArray.findIndex(result => result.time === parent.textContent.split(' ')[2]);
+            resultsArray.splice(index, 1);
+
+            team1Score = resultsArray.reduce((acc, curr) => curr.team === 1 ? acc + curr.score : acc, 0);
+            team2Score = resultsArray.reduce((acc, curr) => curr.team === 2 ? acc + curr.score : acc, 0);
+
             result1DOM.textContent = team1Score;
-            localStorage.setItem('team1Score', team1Score);
-        } else {
-            team2Score -= coof;
             result2DOM.textContent = team2Score;
-            localStorage.setItem('team2Score', team2Score);
-        }
-        eventElement.remove();
-        const updatedEvents = events.filter(e => e !== event);
-        localStorage.setItem('events', JSON.stringify(updatedEvents));
+
+            localStorage.setItem('results', JSON.stringify(resultsArray));
+            localStorage.setItem('score1', team1Score);
+            localStorage.setItem('score2', team2Score);
+        });
     });
 
-    eventElement.appendChild(removeButton);
-    logDOM.insertAdjacentElement('afterbegin', eventElement);
-
-    const events = JSON.parse(localStorage.getItem('events')) || [];
-    events.push(eventData);
-    localStorage.setItem('events', JSON.stringify(events));
-    localStorage.setItem('team1Score', team1Score);
-    localStorage.setItem('team2Score', team2Score);
+    localStorage.setItem('results', JSON.stringify(resultsArray));
+    localStorage.setItem('score1', team1Score);
+    localStorage.setItem('score2', team2Score);
 }
 
 window.addEventListener('load', () => {
-    const events = JSON.parse(localStorage.getItem('events')) || [];
+    const storedResults = localStorage.getItem('results');
+    const resultsArray = storedResults ? JSON.parse(storedResults) : [];
 
-    events.forEach(event => {
-        const { coof, team, minutes, seconds } = event;
-        const result = coof > 0 ? `<p>Team ${team} scored: +${coof} ${minutes}:${seconds}</p>`
-            : `<p>Points taken from Team ${team}: ${coof} ${minutes}:${seconds}</p>`;
+    resultsArray.reverse().forEach(result => {
+        const resultElement = document.createElement('p');
+        resultElement.textContent = `Team ${result.team} ${result.score > 0 ? 'scored' : 'lost points'}: ${result.score} ${result.time} `;
 
-        const eventElement = document.createElement('div');
-        eventElement.innerHTML = result;
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Remove';
+        removeBtn.classList.add('del');
 
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
-        removeButton.addEventListener('click', () => {
-            if (team === 1) {
-                team1Score -= coof;
-                result1DOM.textContent = team1Score;
-                localStorage.setItem('team1Score', team1Score);
-            } else {
-                team2Score -= coof;
-                result2DOM.textContent = team2Score;
-                localStorage.setItem('team2Score', team2Score);
-            }
-            eventElement.remove();
-            const updatedEvents = events.filter(e => e !== event);
-            localStorage.setItem('events', JSON.stringify(updatedEvents));
+        removeBtn.addEventListener('click', (e) => {
+            const parent = e.target.parentElement;
+            parent.remove();
+
+            const index = resultsArray.findIndex(result => result.time === parent.textContent.split(' ')[2]);
+            resultsArray.splice(index, 1);
+
+            team1Score = resultsArray.reduce((acc, curr) => curr.team === 1 ? acc + curr.score : acc, 0);
+            team2Score = resultsArray.reduce((acc, curr) => curr.team === 2 ? acc + curr.score : acc, 0);
+
+            result1DOM.textContent = team1Score;
+            result2DOM.textContent = team2Score;
+
+            localStorage.setItem('results', JSON.stringify(resultsArray));
+            localStorage.setItem('score1', team1Score);
+            localStorage.setItem('score2', team2Score);
         });
 
-        eventElement.appendChild(removeButton);
-        logDOM.insertAdjacentElement('afterbegin', eventElement);
-
-        team1Score = parseInt(localStorage.getItem('team1Score')) || 0;
-        team2Score = parseInt(localStorage.getItem('team2Score')) || 0;
-
-        result1DOM.textContent = team1Score;
-        result2DOM.textContent = team2Score;
+        resultElement.appendChild(removeBtn);
+        logDOM.appendChild(resultElement);
     });
+
+    team1Score = parseInt(localStorage.getItem('score1')) || 0;
+    team2Score = parseInt(localStorage.getItem('score2')) || 0;
+    result1DOM.textContent = team1Score;
+    result2DOM.textContent = team2Score;
 });
 
 const bars1DOM = document.querySelectorAll('.bar1');
