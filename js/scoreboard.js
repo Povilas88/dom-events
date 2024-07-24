@@ -74,35 +74,39 @@ buttonsDOM.forEach((button, index) => {
     });
 });
 
+let team1Score = parseInt(localStorage.getItem('score1')) || 0;
+let team2Score = parseInt(localStorage.getItem('score2')) || 0;
 const result1DOM = document.getElementById('team1').querySelector('.points > div');
 const result2DOM = document.getElementById('team2').querySelector('.points > div');
 const logDOM = document.getElementById('eventLog');
-
-let team1Score = 0;
-let team2Score = 0;
 
 function team(coof = 0, team) {
     team === 1 ? team1Score += coof : team2Score += coof;
     team === 1 ? result1DOM.textContent = team1Score : result2DOM.textContent = team2Score;
 
+    const miliSeconds = new Date().getMilliseconds();
+
     const array = {
         score: coof,
         team: team,
-        time: `${minutes}:${seconds}`
+        time: `${miliSeconds}`,
+        minutes: minutes,
+        seconds: seconds
     };
 
-    logDOM.insertAdjacentHTML('afterbegin', `<p>Team ${team} ${coof > 0 ? 'scored' : 'lost points'}: ${coof} ${minutes}:${seconds} <button class="del">Remove</button></p>`);
+    logDOM.insertAdjacentHTML('afterbegin', `<p data-time="${miliSeconds}">Team ${team} ${coof > 0 ? 'scored' : 'lost points'}: ${coof} ${minutes}:${seconds} <button class="del">Remove</button></p>`);
 
     let resultsArray = JSON.parse(localStorage.getItem('results')) || [];
     resultsArray.push(array);
 
     const removeBtns = document.querySelectorAll('.del');
     removeBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.onclick = (e) => {
             const parent = e.target.parentElement;
+            const time = parent.getAttribute('data-time');
             parent.remove();
 
-            const index = resultsArray.findIndex(result => result.time === parent.textContent.split(' ')[2]);
+            const index = resultsArray.findIndex(result => result.time === time);
             resultsArray.splice(index, 1);
 
             team1Score = resultsArray.reduce((acc, curr) => curr.team === 1 ? acc + curr.score : acc, 0);
@@ -114,7 +118,7 @@ function team(coof = 0, team) {
             localStorage.setItem('results', JSON.stringify(resultsArray));
             localStorage.setItem('score1', team1Score);
             localStorage.setItem('score2', team2Score);
-        });
+        };
     });
 
     localStorage.setItem('results', JSON.stringify(resultsArray));
@@ -122,23 +126,23 @@ function team(coof = 0, team) {
     localStorage.setItem('score2', team2Score);
 }
 
-window.addEventListener('load', () => {
-    const storedResults = localStorage.getItem('results');
-    const resultsArray = storedResults ? JSON.parse(storedResults) : [];
+result1DOM.textContent = team1Score;
+result2DOM.textContent = team2Score;
 
-    resultsArray.reverse().forEach(result => {
-        const resultElement = document.createElement('p');
-        resultElement.textContent = `Team ${result.team} ${result.score > 0 ? 'scored' : 'lost points'}: ${result.score} ${result.time} `;
+window.onload = () => {
+    const resultsArray = JSON.parse(localStorage.getItem('results')) || [];
+    resultsArray.forEach(result => {
+        logDOM.insertAdjacentHTML('afterbegin', `<p data-time="${result.time}">Team ${result.team} ${result.score > 0 ? 'scored' : 'lost points'}: ${result.score} ${result.minutes}:${result.seconds} <button class="del">Remove</button></p>`);
+    });
 
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Remove';
-        removeBtn.classList.add('del');
-
-        removeBtn.addEventListener('click', (e) => {
+    const removeBtns = document.querySelectorAll('.del');
+    removeBtns.forEach(btn => {
+        btn.onclick = (e) => {
             const parent = e.target.parentElement;
+            const time = parent.getAttribute('data-time');
             parent.remove();
 
-            const index = resultsArray.findIndex(result => result.time === parent.textContent.split(' ')[2]);
+            const index = resultsArray.findIndex(result => result.time === time);
             resultsArray.splice(index, 1);
 
             team1Score = resultsArray.reduce((acc, curr) => curr.team === 1 ? acc + curr.score : acc, 0);
@@ -150,17 +154,9 @@ window.addEventListener('load', () => {
             localStorage.setItem('results', JSON.stringify(resultsArray));
             localStorage.setItem('score1', team1Score);
             localStorage.setItem('score2', team2Score);
-        });
-
-        resultElement.appendChild(removeBtn);
-        logDOM.appendChild(resultElement);
+        };
     });
-
-    team1Score = parseInt(localStorage.getItem('score1')) || 0;
-    team2Score = parseInt(localStorage.getItem('score2')) || 0;
-    result1DOM.textContent = team1Score;
-    result2DOM.textContent = team2Score;
-});
+};
 
 const bars1DOM = document.querySelectorAll('.bar1');
 const bars2DOM = document.querySelectorAll('.bar2');
