@@ -5,7 +5,7 @@ import { pauseTimer } from "./timer.js";
 import { startTimer } from "./timer.js";
 import { resetTimer } from "./timer.js";
 
-header();
+header(true);
 
 const buttonsDOM = document.querySelectorAll('button');
 buttonsDOM.forEach((button, index) => {
