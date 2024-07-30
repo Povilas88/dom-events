@@ -3,6 +3,11 @@
     src: url(./fonts/digital-7.ttf);
 }
 
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+        sans-serif;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -116,6 +121,7 @@ h2 {
     width: 75px;
     margin-bottom: 10px;
 }
+
 .timeContainer button {
     display: flex;
     align-items: center;
@@ -130,9 +136,36 @@ h2 {
 .timeContainer button:hover {
     cursor: pointer;
 }
+
 .digit {
     width: 16px;
     text-align: end;
+}
+
+.plusMinus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.one {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 2rem;
+}
+
+.one > button {
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+.one > button:hover {
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 600px) {
