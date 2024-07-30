@@ -1,6 +1,6 @@
 const data = [
-    { href: '', text: 'Home' },
-    { href: 'one', text: 'One' },
+    { href: '', text: 'Scoreboard' },
+    { href: 'cards', text: 'Cards' },
 ];
 
 export function header(isHomepage = false) {
