@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: antiquewhite;
+}
+
+.section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.container {
+    height: 18rem;
+    width: 30rem;
+    background-color: #005094;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.count {
+    border: double 1px white;
+    padding: 10px 20px;
+    font-size: 2rem;
+}
+
+hr {
+    width: 90%;
+}
+
+input {
+    width: 90%;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: none;
+}

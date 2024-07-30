@@ -1,5 +1,7 @@
 const data = [
     { href: '', text: 'Scoreboard' },
+    { href: 'hex-generator', text: 'Hex' },
+    { href: 'key-up', text: 'Key up' },
     { href: 'cards', text: 'Cards' },
 ];
 

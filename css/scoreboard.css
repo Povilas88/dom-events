@@ -3,12 +3,16 @@
     src: url(./fonts/digital-7.ttf);
 }
 
-body {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
-        sans-serif;
+body,
+body * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 main {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+        sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
