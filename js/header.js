@@ -2,6 +2,7 @@ const data = [
     { href: '', text: 'Scoreboard' },
     { href: 'hex-generator', text: 'Hex' },
     { href: 'key-up', text: 'Key up' },
+    { href: 'vowelCount', text: 'Vowels' },
     { href: 'cards', text: 'Cards' },
 ];
 
