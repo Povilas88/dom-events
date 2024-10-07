@@ -1,9 +1,9 @@
 const data = [
     { href: '', text: 'Scoreboard' },
-    { href: 'hex-generator', text: 'Hex' },
-    { href: 'key-up', text: 'Key up' },
-    { href: 'vowelCount', text: 'Vowels' },
-    { href: 'cards', text: 'Cards' },
+    { href: 'html/hexGenerator.html', text: 'Hex' },
+    { href: 'html/keyUp.html', text: 'Key up' },
+    { href: 'html/vowelCount.html', text: 'Vowels' },
+    { href: 'html/cards.html', text: 'Cards' },
 ];
 
 export function header(isHomepage = false) {

@@ -1,5 +1,6 @@
 import { header } from "./header.js";
 header();
+
 const wordDOM = document.querySelector('.inputText');
 const btnDOM = document.querySelector('.btn');
 const resultsDOM = document.querySelector('.results');
