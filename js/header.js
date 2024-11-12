@@ -4,6 +4,7 @@ const data = [
     { href: 'html/keyUp.html', text: 'Key up' },
     { href: 'html/vowelCount.html', text: 'Vowels' },
     { href: 'html/cards.html', text: 'Cards' },
+    { href: 'html/slide.html', text: 'Slide' },
 ];
 
 export function header(isHomepage = false) {
